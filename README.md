@@ -9,7 +9,7 @@ schema which is implemented on the server and you can query here. On the left ha
 you can execute a GraphQL queries and see the results of it's execution.
 
 This is just a small demonstration. It really gets interesting when you start to play with the schema on the server side. Fortunately it's
-pretty easy to do. Since it's a simple Play application, all it takes to start playground locally and start playing with schema is this:
+pretty easy to do. Since it's a simple Play application using webpack, all it takes to start playground locally and start playing with schema is this:
 
 ```bash
 $ git clone https://github.com/ykad4/sangria-relay-playground.git

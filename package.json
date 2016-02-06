@@ -1,5 +1,5 @@
 {
-  "name": "Sangria-relay playground",
+  "name": "sangria-relay-playground",
   "description": "An example of GraphQL server supporting relay written with Play and sangria",
   "version": "0.1.0",
   "dependencies": {

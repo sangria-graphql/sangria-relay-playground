@@ -21,4 +21,4 @@ $ sbt run
 
 Now you are ready to go to [http://localhost:9000](http://localhost:9000) for the playground or to [http://localhost:9000/starwars](http://localhost:9000/starwars) for the minimal Star Wars example.
 
-The prerequisites are [SBT](http://www.scala-sbt.org/download.html), [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html), [npm](https://www.npmjs.com/) and [webpack](https://webpack.github.io/).
+The prerequisites are [SBT](http://www.scala-sbt.org/download.html), [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html), [npm](https://www.npmjs.com/), [babel](https://babeljs.io/) and [webpack](https://webpack.github.io/).

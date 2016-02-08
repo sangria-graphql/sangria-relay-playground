@@ -9,3 +9,8 @@ target
 /.settings
 /RUNNING_PID
 /node_modules
+
+*.iml
+
+# webpack output
+/public/*.*

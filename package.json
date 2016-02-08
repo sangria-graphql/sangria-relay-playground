@@ -3,6 +3,20 @@
   "description": "An example of GraphQL server supporting relay written with Play and sangria",
   "version": "0.1.0",
   "dependencies": {
+    "bootstrap-sass": "^3.3.6",
+    "brace": "^0.7.0",
+    "classnames": "2.2.3",
+    "graphql": "0.4.16",
+    "graphql-relay": "0.3.6",
+    "historyjs": "^1.8.0-b2",
+    "jquery": "^2.2.0",
+    "jquery.hotkeys": "^0.1.0",
+    "react": "0.14.7",
+    "react-dom": "0.14.7",
+    "react-relay": "0.6.1",
+    "urijs": "^1.17.0"
+  },
+  "devDependencies": {
     "babel-core": "6.4.5",
     "babel-loader": "6.2.2",
     "babel-polyfill": "6.3.14",
@@ -10,12 +24,16 @@
     "babel-preset-react": "6.3.13",
     "babel-preset-stage-0": "6.3.13",
     "babel-relay-plugin": "0.6.3",
-    "classnames": "2.2.3",
-    "graphql": "0.4.16",
-    "graphql-relay": "0.3.6",
-    "react": "0.14.7",
-    "react-dom": "0.14.7",
-    "react-relay": "0.6.1",
+    "bootstrap-loader": "^1.0.8",
+    "css-loader": "^0.23.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.8.5",
+    "imports-loader": "^0.6.5",
+    "node-sass": "^3.4.2",
+    "resolve-url-loader": "^1.4.3",
+    "sass-loader": "^3.1.2",
+    "style-loader": "^0.13.0",
+    "url-loader": "^0.5.7",
     "webpack": "1.12.13"
   }
 }

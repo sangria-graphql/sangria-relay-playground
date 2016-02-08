@@ -11,17 +11,8 @@
 
         <title>@title</title>
 
-        <link rel="stylesheet" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
-        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
-
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("index.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
-
-            <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-            <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-            <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
     </head>
     <body>
         @content
@@ -58,16 +49,17 @@ $ sbt run</pre>
             </div>
         </section>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>*@
 
-        <script src="@routes.Assets.versioned("javascripts/jquery.hotkeys.js")"></script>
-        <script src="@routes.Assets.versioned("javascripts/jquery.history.js")"></script>
-        <script src="@routes.Assets.versioned("javascripts/URI.min.js")"></script>
-        <script src="@routes.Assets.versioned("javascripts/jquery.URI.min.js")"></script>
+      <script src="@routes.Assets.versioned("index.js")"></script>
+        @*<script src="@routes.Assets.versioned("javascripts/jquery.hotkeys.js")"></script>*@
+        @*<script src="@routes.Assets.versioned("javascripts/jquery.history.js")"></script>*@
+        @*<script src="@routes.Assets.versioned("javascripts/URI.min.js")"></script>*@
+        @*<script src="@routes.Assets.versioned("javascripts/jquery.URI.min.js")"></script>*@
 
-        <script src="@routes.Assets.versioned("bootstrap/js/bootstrap.min.js")"></script>
-        <script src="@routes.Assets.versioned("ace-editor/src-noconflict/ace.js")" type="text/javascript" charset="utf-8"></script>
-        <script src="@routes.Assets.versioned("javascripts/app.js")" type="text/javascript"></script>
+        @*<script src="@routes.Assets.versioned("bootstrap/js/bootstrap.min.js")"></script>*@
+        @*<script src="@routes.Assets.versioned("ace-editor/src-noconflict/ace.js")" type="text/javascript" charset="utf-8"></script>*@
+        @*<script src="@routes.Assets.versioned("javascripts/app.js")" type="text/javascript"></script>*@
 
         @if(play.api.Play.current.configuration.getString("gaCode").isDefined) {
             <script>

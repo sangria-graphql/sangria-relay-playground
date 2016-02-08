@@ -36,7 +36,7 @@ module.exports = {
           plugins: ['./babelRelayPlugin']
         }
       },
-      {test: /\.scss$/, loader: ExtractTextPlugin.extract("style", "css?sourceMap&modules!sass?sourceMap")},
+      {test: /\.scss$/, loader: ExtractTextPlugin.extract("style", "css?sourceMap!sass?sourceMap")},
       {test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css')},
       {test: /\.(woff2?|ttf|eot|svg)$/, loader: 'url?limit=10000'},
       {test: /bootstrap-sass[\\\/].*\.js/, loader: 'imports?jQuery=jquery'},

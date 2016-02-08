@@ -21,7 +21,7 @@ class StarWarsApp extends React.Component {
             <ol>
                 {factions.map(faction => (
                     <li key={faction.__dataID__}>
-                        <h1>{faction.name}</h1>
+                        <h2>{faction.name}</h2>
                         <ol>
                             {faction.ships.edges.map(edge => (
                                 <li key={edge.node.__dataID__}><StarWarsShip ship={edge.node}/></li>

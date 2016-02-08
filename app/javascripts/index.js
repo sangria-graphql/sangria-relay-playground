@@ -7,7 +7,7 @@ import 'jquery.hotkeys'
 import 'brace/mode/json'
 import 'brace/theme/github'
 
-import "./css/main.css"
+import "./css/index.css"
 
 $(function () {
   var updateSchema = function () {

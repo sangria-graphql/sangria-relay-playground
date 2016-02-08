@@ -17,6 +17,8 @@ import Relay from 'react-relay';
 import StarWarsApp from './components/StarWarsApp.jsx';
 import StarWarsAppHomeRoute from './routes/StarWarsAppHomeRoute';
 
+import "./css/app.css"
+
 ReactDOM.render(
     <Relay.RootContainer
         Component={StarWarsApp}

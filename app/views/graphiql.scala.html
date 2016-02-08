@@ -1,45 +1,124 @@
 <!DOCTYPE html>
 
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="keywords" content="sangria,scala,graphql,playframework,graphiql" />
+<html>
+<head>
+  <link href="//cdn.jsdelivr.net/graphiql/0.4.9/graphiql.css" rel="stylesheet" />
 
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      width: 100%;
+    }
 
-        <title>Take a sip of Sangria with GraphiQL!</title>
+    #graphiql-container .toolbar {
+      overflow-x: hidden;
+    }
+  </style>
 
-        <link href="//cdn.jsdelivr.net/graphiql/0.4.2/graphiql.css" rel="stylesheet" />
+  <script src="//cdn.jsdelivr.net/fetch/0.9.0/fetch.min.js"></script>
+  <script src="//cdn.jsdelivr.net/react/0.14.7/react.min.js"></script>
+  <script src="//cdn.jsdelivr.net/react/0.14.7/react-dom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/graphiql/0.4.9/graphiql.min.js"></script>
+</head>
+<body>
+  <script>
+    // Collect the URL parameters
+    var parameters = {};
+    window.location.search.substr(1).split('&').forEach(function (entry) {
+      var eq = entry.indexOf('=');
+      if (eq >= 0) {
+        parameters[decodeURIComponent(entry.slice(0, eq))] =
+          decodeURIComponent(entry.slice(eq + 1));
+      }
+    });
 
-        <script src="//cdn.jsdelivr.net/fetch/0.9.0/fetch.min.js"></script>
-        <script src="//cdn.jsdelivr.net/react/0.14.2/react.min.js"></script>
-        <script src="//cdn.jsdelivr.net/react/0.14.2/react-dom.min.js"></script>
-        <script src="//cdn.jsdelivr.net/graphiql/0.4.2/graphiql.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    // Produce a Location query string from a parameter object.
+    function locationQuery(params) {
+      return '?' + Object.keys(params).map(function (key) {
+        return encodeURIComponent(key) + '=' +
+          encodeURIComponent(params[key]);
+      }).join('&');
+    }
 
+    // Derive a fetch URL from the current URL, sans the GraphQL parameters.
+    var graphqlParamNames = {
+      query: true,
+      variables: true,
+      operationName: true
+    };
 
-        <script src="@routes.Assets.versioned("javascripts/app-graphiql.js")"></script>
-    </head>
+    var otherParams = {};
+    for (var k in parameters) {
+      if (parameters.hasOwnProperty(k) && graphqlParamNames[k] !== true) {
+        otherParams[k] = parameters[k];
+      }
+    }
 
-    <body>
-    Loading...
-
-        <script>
-      renderGraphiql(document.body)
-    </script>
-
-        @if(play.api.Play.current.configuration.getString("gaCode").isDefined) {
-            <script>
-                    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-                    ga('create', '@play.api.Play.current.configuration.getString("gaCode").get', 'auto');
-                    ga('send', 'pageview');
-            </script>
+    // Defines a GraphQL fetcher using the fetch API.
+    function graphQLFetcher(graphQLParams) {
+      return fetch(window.location.origin + '/graphql', {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(graphQLParams),
+        credentials: 'include',
+      }).then(function (response) {
+        return response.text();
+      }).then(function (responseBody) {
+        try {
+          return JSON.parse(responseBody);
+        } catch (error) {
+          return responseBody;
         }
-    </body>
+      });
+    }
+
+    // When the query and variables string is edited, update the URL bar so
+    // that it can be easily shared.
+    function onEditQuery(newQuery) {
+      parameters.query = newQuery;
+      updateURL();
+    }
+
+    function onEditVariables(newVariables) {
+      parameters.variables = newVariables;
+      updateURL();
+    }
+
+    function updateURL() {
+      history.replaceState(null, null, locationQuery(parameters));
+    }
+
+    // Render <GraphiQL /> into the body.
+    React.render(
+      React.createElement(GraphiQL, {
+        fetcher: graphQLFetcher,
+        query: undefined,
+        response: null,
+        variables: null,
+        onEditQuery: onEditQuery,
+        onEditVariables: onEditVariables,
+        defaultQuery: "# Welcome to GraphiQL\n" +
+          "#\n" +
+          "# GraphiQL is an in-browser IDE for writing, validating, and\n" +
+          "# testing GraphQL queries.\n" +
+          "#\n" +
+          "# Type queries into this side of the screen, and you will\n" +
+          "# see intelligent typeaheads aware of the current GraphQL type schema and\n" +
+          "# live syntax and validation errors highlighted within the text.\n" +
+          "#\n" +
+          "# To bring up the auto-complete at any point, just press Ctrl-Space.\n" +
+          "#\n" +
+          "# Press the run button above, or Cmd-Enter to execute the query, and the result\n" +
+          "# will appear in the pane to the right.\n\n" +
+          "query FactionsAndShips {\n  factions(names:[\"empire\",\"rebels\"]) {\n    name\n    ships{\n      edges{\n        node{\n          name\n        }\n      }\n    }\n  }\n}"
+      }),
+      document.body
+    );
+  </script>
+</body>
 </html>

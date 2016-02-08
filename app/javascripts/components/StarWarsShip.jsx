@@ -26,6 +26,6 @@ export default Relay.createContainer(StarWarsShip, {
             fragment on Ship {
                 name
             }
-        `,
-    },
+        `
+    }
 });

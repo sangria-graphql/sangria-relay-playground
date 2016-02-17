@@ -12,7 +12,7 @@ This is just a small demonstration. It really gets interesting when you start to
 pretty easy to do. Since it's a simple Play application using webpack, all it takes to start playground locally and start playing with schema is this:
 
 ```bash
-$ git clone https://github.com/ykad4/sangria-relay-playground.git
+$ git clone https://github.com/sangria-graphql/sangria-relay-playground.git
 $ cd sangria-relay-playground
 $ npm install
 $ webpack

@@ -18,3 +18,8 @@ resolvers += "Sonatype snapshots" at "https://oss.sonatype.org/content/repositor
 routesGenerator := InjectedRoutesGenerator
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
+
+herokuAppName in Compile := "sangria-relay-playground"
+herokuConfigVars in Compile := Map(
+  "JAVA_OPTS" -> "-DgaCode=UA-65759630-3 -DdefaultGraphQLUrl=http://try-relay.sangria-graphql.org/graphql"
+)

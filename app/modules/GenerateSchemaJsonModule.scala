@@ -26,7 +26,7 @@ class MyGenerateSchemaJsonClass extends GenerateSchemaJson {
       case Success(schemaJson) => {
         Logger.info("Generation of schema.json")
         new PrintWriter("schema.json") {
-          write(Json.prettyPrint(schemaJson));
+          write(Json.prettyPrint(schemaJson))
           close()
         }
       }

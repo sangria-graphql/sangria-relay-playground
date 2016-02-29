@@ -1,6 +1,5 @@
 package controllers
 
-import java.io.PrintWriter
 import javax.inject.Inject
 
 import akka.actor.ActorSystem
@@ -8,7 +7,6 @@ import play.api.libs.json._
 import play.api.mvc._
 
 import sangria.execution.Executor
-import sangria.introspection.introspectionQuery
 import sangria.parser.{SyntaxError, QueryParser}
 import sangria.marshalling.playJson._
 
@@ -80,9 +78,7 @@ class Application @Inject()(system: ActorSystem) extends Controller {
         throw error
     }
 
-  def renderSchema = Action.async {
-    executor.execute(introspectionQuery) map (res =>
-      SchemaRenderer.renderSchema(res) map (Ok(_)) getOrElse
-        InternalServerError("Can't render the schema!"))
+  def renderSchema = Action {
+    Ok(SchemaRenderer.renderSchema(SchemaDefinition.schema))
   }
 }

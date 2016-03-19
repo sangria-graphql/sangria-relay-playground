@@ -6,7 +6,7 @@ import akka.actor.ActorSystem
 import play.api.libs.json._
 import play.api.mvc._
 
-import sangria.execution.Executor
+import sangria.execution.{ErrorWithResolver, QueryAnalysisError, Executor}
 import sangria.parser.{SyntaxError, QueryParser}
 import sangria.marshalling.playJson._
 
@@ -33,11 +33,6 @@ class Application @Inject()(system: ActorSystem) extends Controller {
     Ok(views.html.graphiql())
   }
 
-  val executor = Executor(
-    schema = SchemaDefinition.schema,
-    userContext = new FactionRepo,
-    maxQueryDepth = Some(10))
-
   def graphql(query: String, variables: Option[String], operation: Option[String]) =
     Action.async(executeQuery(query, variables map parseVariables, operation))
 
@@ -62,9 +57,15 @@ class Application @Inject()(system: ActorSystem) extends Controller {
 
       // query parsed successfully, time to execute it!
       case Success(queryAst) =>
-        executor.execute(queryAst,
-          operationName = operation,
-          variables = variables getOrElse Json.obj()) map (Ok(_))
+        Executor.execute(SchemaDefinition.schema, queryAst, new FactionRepo,
+            operationName = operation,
+            variables = variables getOrElse Json.obj(),
+            maxQueryDepth = Some(10))
+          .map(Ok(_))
+          .recover {
+            case error: QueryAnalysisError ⇒ BadRequest(error.resolveError)
+            case error: ErrorWithResolver ⇒ InternalServerError(error.resolveError)
+          }
 
       // can't parse GraphQL query, return error
       case Failure(error: SyntaxError) =>

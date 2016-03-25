@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <link href="//cdn.jsdelivr.net/graphiql/0.4.9/graphiql.css" rel="stylesheet" />
+  <link href="//cdn.jsdelivr.net/graphiql/0.6.6/graphiql.css" rel="stylesheet" />
 
   <style>
     html, body {
@@ -12,17 +12,19 @@
       width: 100%;
     }
 
-    #graphiql-container .toolbar {
-      overflow-x: hidden;
+    #graphiql {
+      height: 100vh;
     }
   </style>
 
   <script src="//cdn.jsdelivr.net/fetch/0.9.0/fetch.min.js"></script>
   <script src="//cdn.jsdelivr.net/react/0.14.7/react.min.js"></script>
   <script src="//cdn.jsdelivr.net/react/0.14.7/react-dom.min.js"></script>
-  <script src="//cdn.jsdelivr.net/graphiql/0.4.9/graphiql.min.js"></script>
+  <script src="//cdn.jsdelivr.net/graphiql/0.6.6/graphiql.min.js"></script>
 </head>
 <body>
+  <div id="graphiql">Loading...</div>
+
   <script>
     // Collect the URL parameters
     var parameters = {};
@@ -117,7 +119,7 @@
           "# will appear in the pane to the right.\n\n" +
           "query FactionsAndShips {\n  factions(names:[\"empire\",\"rebels\"]) {\n    name\n    ships{\n      edges{\n        node{\n          name\n        }\n      }\n    }\n  }\n}"
       }),
-      document.body
+      document.getElementById('graphiql')
     );
   </script>
 

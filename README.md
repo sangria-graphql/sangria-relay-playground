@@ -8,6 +8,10 @@ It also serves as a playground - on the right hand side you see a textual repres
 schema which is implemented on the server and you can query here. On the left hand side
 you can execute a GraphQL queries and see the results of it's execution.
 
+It's available here:
+
+[http://try-relay.sangria-graphql.org](http://try-relay.sangria-graphql.org)
+
 This is just a small demonstration. It really gets interesting when you start to play with the schema on the server side. Fortunately it's
 pretty easy to do. Since it's a simple Play application using webpack, all it takes to start playground locally and start playing with schema is this:
 

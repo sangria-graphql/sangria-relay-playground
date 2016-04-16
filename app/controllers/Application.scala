@@ -5,6 +5,7 @@ import javax.inject.Inject
 import akka.actor.ActorSystem
 import play.api.libs.json._
 import play.api.mvc._
+import play.api.Configuration
 
 import sangria.execution.{ErrorWithResolver, QueryAnalysisError, Executor}
 import sangria.parser.{SyntaxError, QueryParser}
@@ -17,20 +18,23 @@ import sangria.renderer.SchemaRenderer
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-class Application @Inject()(system: ActorSystem) extends Controller {
+class Application @Inject()(system: ActorSystem, config: Configuration) extends Controller {
 
   import system.dispatcher
 
+  val googleAnalyticsCode = config.getString("gaCode")
+  val defaultGraphQLUrl = config.getString("defaultGraphQLUrl").getOrElse(s"http://localhost:${config.getInt("http.port").getOrElse(9000)}")+"/graphql"
+
   def index = Action {
-    Ok(views.html.index())
+    Ok(views.html.index(googleAnalyticsCode,defaultGraphQLUrl))
+  }
+
+  def graphiql = Action {
+    Ok(views.html.graphiql(googleAnalyticsCode))
   }
 
   def starwars = Action {
     Ok(views.html.starwars())
-  }
-
-  def graphiql = Action {
-    Ok(views.html.graphiql())
   }
 
   def graphql(query: String, variables: Option[String], operation: Option[String]) =

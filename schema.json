@@ -369,7 +369,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "empire",
+          "name" : "empires",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -483,7 +483,7 @@
           "deprecationReason" : null
         }, {
           "name" : "edges",
-          "description" : "Information to aid in pagination.",
+          "description" : "A list of edges.",
           "args" : [ ],
           "type" : {
             "kind" : "LIST",
@@ -539,7 +539,7 @@
       }, {
         "kind" : "OBJECT",
         "name" : "__Directive",
-        "description" : "A Directive provides a way to describe alternate runtime execution and type validation behavior in a GraphQL document.\n\nIn some cases, you need to provide options to alter GraphQL’s execution behavior in ways field arguments will not suffice, such as conditionally including or skipping a field. Directives provide this by describing additional information to the executor.",
+        "description" : "A Directive provides a way to describe alternate runtime execution and type validation behavior in a GraphQL document.\n\nIn some cases, you need to provide options to alter GraphQLâ€™s execution behavior in ways field arguments will not suffice, such as conditionally including or skipping a field. Directives provide this by describing additional information to the executor.",
         "fields" : [ {
           "name" : "name",
           "description" : null,
@@ -563,6 +563,28 @@
             "kind" : "SCALAR",
             "name" : "String",
             "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "locations",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "LIST",
+              "name" : null,
+              "ofType" : {
+                "kind" : "NON_NULL",
+                "name" : null,
+                "ofType" : {
+                  "kind" : "ENUM",
+                  "name" : "__DirectiveLocation"
+                }
+              }
+            }
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -601,8 +623,8 @@
               "ofType" : null
             }
           },
-          "isDeprecated" : false,
-          "deprecationReason" : null
+          "isDeprecated" : true,
+          "deprecationReason" : "Use `locations`."
         }, {
           "name" : "onFragment",
           "description" : null,
@@ -616,8 +638,8 @@
               "ofType" : null
             }
           },
-          "isDeprecated" : false,
-          "deprecationReason" : null
+          "isDeprecated" : true,
+          "deprecationReason" : "Use `locations`."
         }, {
           "name" : "onField",
           "description" : null,
@@ -631,12 +653,56 @@
               "ofType" : null
             }
           },
-          "isDeprecated" : false,
-          "deprecationReason" : null
+          "isDeprecated" : true,
+          "deprecationReason" : "Use `locations`."
         } ],
         "inputFields" : null,
         "interfaces" : [ ],
         "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "ENUM",
+        "name" : "__DirectiveLocation",
+        "description" : "A Directive can be adjacent to many parts of the GraphQL language, a __DirectiveLocation describes one such possible adjacencies.",
+        "fields" : null,
+        "inputFields" : null,
+        "interfaces" : null,
+        "enumValues" : [ {
+          "name" : "QUERY",
+          "description" : "Location adjacent to a query operation.",
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "MUTATION",
+          "description" : "Location adjacent to a mutation operation.",
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "SUBSCRIPTION",
+          "description" : "Location adjacent to a subscription operation.",
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "FIELD",
+          "description" : "Location adjacent to a field.",
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "FRAGMENT_DEFINITION",
+          "description" : "Location adjacent to a fragment definition.",
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "FRAGMENT_SPREAD",
+          "description" : "Location adjacent to a fragment spread.",
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "INLINE_FRAGMENT",
+          "description" : "Location adjacent to an inline fragment.",
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
         "possibleTypes" : null
       }, {
         "kind" : "OBJECT",
@@ -1243,6 +1309,7 @@
       "directives" : [ {
         "name" : "include",
         "description" : "Directs the executor to include this field or fragment only when the `if` argument is true.",
+        "locations" : [ "FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT" ],
         "args" : [ {
           "name" : "if",
           "description" : "Included when true.",
@@ -1256,13 +1323,11 @@
             }
           },
           "defaultValue" : null
-        } ],
-        "onOperation" : false,
-        "onFragment" : true,
-        "onField" : true
+        } ]
       }, {
         "name" : "skip",
         "description" : "Directs the executor to skip this field or fragment when the `if` argument is true.",
+        "locations" : [ "FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT" ],
         "args" : [ {
           "name" : "if",
           "description" : "Included when true.",
@@ -1276,10 +1341,7 @@
             }
           },
           "defaultValue" : null
-        } ],
-        "onOperation" : false,
-        "onFragment" : true,
-        "onField" : true
+        } ]
       } ]
     }
   }

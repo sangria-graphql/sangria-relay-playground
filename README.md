@@ -19,7 +19,6 @@ pretty easy to do. Since it's a simple Play application using webpack, all it ta
 $ git clone https://github.com/sangria-graphql/sangria-relay-playground.git
 $ cd sangria-relay-playground
 $ npm install
-$ webpack
 $ sbt run
 ```
 

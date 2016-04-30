@@ -369,7 +369,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "empires",
+          "name" : "empire",
           "description" : null,
           "args" : [ ],
           "type" : {

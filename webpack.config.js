@@ -33,7 +33,7 @@ module.exports = {
         test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader',
         query: {
           presets: ['react', 'es2015', 'stage-0'],
-          plugins: ['./babelRelayPlugin']
+          plugins: ['./babelRelayPlugin'].map(require.resolve)
         }
       },
       {test: /\.scss$/, loader: ExtractTextPlugin.extract("style", "css?sourceMap!sass?sourceMap")},

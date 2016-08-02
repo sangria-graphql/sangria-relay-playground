@@ -46,6 +46,7 @@ $(function () {
     var editor = ace.edit(id);
 
     editor.setTheme(editorTheme);
+    editor.$blockScrolling = Infinity;
     editor.getSession().setOptions({
       mode: "ace/mode/" + mode,
       tabSize: 2,

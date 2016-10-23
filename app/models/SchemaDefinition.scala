@@ -180,7 +180,7 @@ object SchemaDefinition {
     Field("empire", OptionType(FactionType), resolve = _.ctx.getEmpire),
     nodeField))
 
-  case class ShipMutationPayload(clientMutationId: String, shipId: String, factionId: String) extends Mutation
+  case class ShipMutationPayload(clientMutationId: Option[String], shipId: String, factionId: String) extends Mutation
 
   /**
     * This will return a `Field` for our ship
@@ -209,7 +209,7 @@ object SchemaDefinition {
       Field("ship", OptionType(ShipType), resolve = ctx ⇒ ctx.ctx.getShip(ctx.value.shipId)),
       Field("faction", OptionType(FactionType), resolve = ctx ⇒ ctx.ctx.getFaction(ctx.value.factionId))),
     mutateAndGetPayload = (input, ctx) ⇒ {
-      val mutationId = input(Mutation.ClientMutationIdFieldName).asInstanceOf[String]
+      val mutationId = input.get(Mutation.ClientMutationIdFieldName).asInstanceOf[Option[Option[String]]].flatten
       val shipName = input("shipName").asInstanceOf[String]
       val factionId = input("factionId").asInstanceOf[String]
 

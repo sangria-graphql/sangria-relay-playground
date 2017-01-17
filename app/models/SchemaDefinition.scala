@@ -85,7 +85,7 @@ object SchemaDefinition {
     * The first method is the way we resolve an ID to its object. The second is the
     * way we resolve an object that implements node to its type.
     */
-  val NodeDefinition(nodeInterface, nodeField) =
+  val NodeDefinition(nodeInterface, nodeField, nodesField) =
     Node.definition((globalId: GlobalId, ctx: Context[FactionRepo, Unit]) ⇒ {
       if (globalId.typeName == "Faction")
         ctx.ctx.getFaction(globalId.id)
@@ -178,7 +178,8 @@ object SchemaDefinition {
       resolve = ctx => ctx.ctx.getFactions(ctx.arg(namesArgument))),
     Field("rebels", OptionType(FactionType), resolve = _.ctx.getRebels),
     Field("empire", OptionType(FactionType), resolve = _.ctx.getEmpire),
-    nodeField))
+    nodeField,
+    nodesField))
 
   case class ShipMutationPayload(clientMutationId: Option[String], shipId: String, factionId: String) extends Mutation
 

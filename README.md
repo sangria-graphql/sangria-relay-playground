@@ -2,7 +2,7 @@
 
 This is an example of [GraphQL](https://facebook.github.io/graphql) server supporting [Relay](https://facebook.github.io/relay/) written with [Play framework](https://www.playframework.com) and [Sangria](http://sangria-graphql.org), it also uses [webpack](https://webpack.github.io/) for client side asset generation.
  
-This example is based on the [Relay Star Wars example](https://github.com/facebook/relay/tree/master/examples/star-wars). You can find more info [here](https://facebook.github.io/relay/docs/graphql-relay-specification.html).
+This example is based on the [Relay Star Wars example](https://github.com/facebook/relay/tree/v0.9.0/examples/star-wars). You can find more info [here](https://facebook.github.io/relay/docs/en/graphql-server-specification.html).
 
 It also serves as a playground - on the right hand side you see a textual representation of the GraphQL
 schema which is implemented on the server and that you can query here. On the left hand side

@@ -15,15 +15,13 @@ import models.SchemaDefinition
 import models.StarWarsData._
 import sangria.renderer.SchemaRenderer
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
-class Application @Inject()(system: ActorSystem, config: Configuration) extends Controller {
+class Application @Inject()(cc: ControllerComponents, config: Configuration)(implicit ec: ExecutionContext) extends AbstractController(cc) {
 
-  import system.dispatcher
-
-  val googleAnalyticsCode = config.getString("gaCode")
-  val defaultGraphQLUrl = config.getString("defaultGraphQLUrl").getOrElse(s"http://localhost:${config.getInt("http.port").getOrElse(9000)}/graphql")
+  val googleAnalyticsCode = config.getOptional[String]("gaCode")
+  val defaultGraphQLUrl = config.getOptional[String]("defaultGraphQLUrl").getOrElse(s"http://localhost:${config.getOptional[Int]("http.port").getOrElse(9000)}/graphql")
 
   def index = Action {
     Ok(views.html.index(googleAnalyticsCode,defaultGraphQLUrl))

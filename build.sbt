@@ -3,12 +3,13 @@ description := "An example of GraphQL server supporting relay written with Play 
 
 version := "1.0-SNAPSHOT"
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.12.6"
 
 libraryDependencies ++= Seq(
   filters,
-  "org.sangria-graphql" %% "sangria-relay" % "1.0.0",
-  "org.sangria-graphql" %% "sangria-play-json" % "1.0.0"
+  guice,
+  "org.sangria-graphql" %% "sangria-relay" % "1.4.1",
+  "org.sangria-graphql" %% "sangria-play-json" % "1.0.4"
 )
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"

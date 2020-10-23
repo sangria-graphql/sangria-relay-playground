@@ -27,8 +27,8 @@ class Application @Inject()(cc: ControllerComponents, config: Configuration)(imp
     Ok(views.html.index(googleAnalyticsCode,defaultGraphQLUrl))
   }
 
-  def graphiql = Action {
-    Ok(views.html.graphiql(googleAnalyticsCode))
+  def playground = Action {
+    Ok(views.html.playground(googleAnalyticsCode))
   }
 
   def starwars = Action {
@@ -65,8 +65,8 @@ class Application @Inject()(cc: ControllerComponents, config: Configuration)(imp
             maxQueryDepth = Some(10))
           .map(Ok(_))
           .recover {
-            case error: QueryAnalysisError ⇒ BadRequest(error.resolveError)
-            case error: ErrorWithResolver ⇒ InternalServerError(error.resolveError)
+            case error: QueryAnalysisError => BadRequest(error.resolveError)
+            case error: ErrorWithResolver => InternalServerError(error.resolveError)
           }
 
       // can't parse GraphQL query, return error

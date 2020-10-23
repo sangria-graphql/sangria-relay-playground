@@ -13,7 +13,7 @@
                     and <a href="http://sangria-graphql.org/" target="_blank">Sangria</a>
                     , it also uses <a href="https://webpack.github.io/" target="_blank">webpack</a>
                     for client side asset generation.
-                    On the right hand side you see a textual representation of the GraphQL schema which is implemented on the server and that you can query here. On the left hand side you can execute a GraphQL query and see the results of its execution. If you prefer, you can also use <a href="@routes.Application.graphiql">
+                    On the right hand side you see a textual representation of the GraphQL schema which is implemented on the server and that you can query here. On the left hand side you can execute a GraphQL query and see the results of its execution. If you prefer, you can also use <a href="@routes.Application.playground()">
                     GraphiQL</a>
                     This example is based on the <a href="https://github.com/facebook/relay/tree/master/examples/star-wars/" target="_blank">
                     Relay Star Wars example.</a>
@@ -43,6 +43,10 @@
 
                 <a class="btn" data-toggle="collapse" data-target="#exampleSection" aria-expanded="false" aria-controls="exampleSection" style="margin-right: 10px">
                     Examples
+                </a>
+
+                <a class="btn" href="@routes.Application.playground()" style="margin-right: 10px">
+                    Full Playground
                 </a>
 
                 <a id="permalink" class="btn" aria-expanded="false" title="Permanent Link">
@@ -95,7 +99,7 @@
 
             <div class="col-sm-4 col-sm-offset-1">
                 <div id="starwars">
-                    <a href="@routes.Application.starwars" class="btn btn-primary" aria-expanded="false" title="Minimal Star Wars Relay example">
+                    <a href="@routes.Application.starwars()" class="btn btn-primary" aria-expanded="false" title="Minimal Star Wars Relay example">
                         Minimal Star Wars Relay example
                     </a>
                 </div>

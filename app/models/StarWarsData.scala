@@ -50,8 +50,8 @@ object StarWarsData {
 
       ships = ships :+ newShip
       factions = factions.map {
-        case f if f.id == factionId ⇒ f.copy(ships = f.ships :+ newShip.id)
-        case f ⇒ f
+        case f if f.id == factionId => f.copy(ships = f.ships :+ newShip.id)
+        case f => f
       }
       newShip
     }

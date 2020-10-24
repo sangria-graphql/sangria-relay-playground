@@ -7,7 +7,7 @@ GET         /                     controllers.Application.index
 GET         /graphql              controllers.Application.graphql(query: String, variables: Option[String], operation: Option[String])
 POST        /graphql              controllers.Application.graphqlBody
 GET         /render-schema        controllers.Application.renderSchema
-GET         /graphiql             controllers.Application.graphiql
+GET         /playground           controllers.Application.playground
 GET         /starwars             controllers.Application.starwars
 
 # Map static resources from the /public folder to the /assets URL path

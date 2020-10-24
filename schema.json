@@ -645,51 +645,6 @@
           },
           "isDeprecated" : false,
           "deprecationReason" : null
-        }, {
-          "name" : "onOperation",
-          "description" : null,
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Boolean",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : true,
-          "deprecationReason" : "Use `locations`."
-        }, {
-          "name" : "onFragment",
-          "description" : null,
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Boolean",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : true,
-          "deprecationReason" : "Use `locations`."
-        }, {
-          "name" : "onField",
-          "description" : null,
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Boolean",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : true,
-          "deprecationReason" : "Use `locations`."
         } ],
         "inputFields" : null,
         "interfaces" : [ ],
@@ -735,6 +690,11 @@
         }, {
           "name" : "INLINE_FRAGMENT",
           "description" : "Location adjacent to an inline fragment.",
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "VARIABLE_DEFINITION",
+          "description" : "Location adjacent to a variable definition.",
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
@@ -1020,6 +980,17 @@
         "name" : "__Schema",
         "description" : "A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, as well as the entry points for query, mutation, and subscription operations.",
         "fields" : [ {
+          "name" : "description",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
           "name" : "types",
           "description" : "A list of all types supported by this server.",
           "args" : [ ],
@@ -1413,7 +1384,8 @@
           },
           "defaultValue" : "\"No longer supported\""
         } ]
-      } ]
+      } ],
+      "description" : null
     }
   }
 }

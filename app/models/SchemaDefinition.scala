@@ -86,7 +86,7 @@ object SchemaDefinition {
     * way we resolve an object that implements node to its type.
     */
   val NodeDefinition(nodeInterface, nodeField, nodesField) =
-    Node.definition((globalId: GlobalId, ctx: Context[FactionRepo, Unit]) ⇒ {
+    Node.definition((globalId: GlobalId, ctx: Context[FactionRepo, Unit]) => {
       if (globalId.typeName == "Faction")
         ctx.ctx.getFaction(globalId.id)
       else if (globalId.typeName == "Ship")
@@ -98,7 +98,7 @@ object SchemaDefinition {
 
   def idFields[T: Identifiable] = fields[Unit, T](
     Node.globalIdField,
-    Field("rawId", StringType, resolve = ctx ⇒ implicitly[Identifiable[T]].id(ctx.value))
+    Field("rawId", StringType, resolve = ctx => implicitly[Identifiable[T]].id(ctx.value))
   )
 
   /**
@@ -154,7 +154,7 @@ object SchemaDefinition {
       Node.globalIdField[FactionRepo, Faction],
       Field("name", OptionType(StringType), Some("The name of the faction."), resolve = _.value.name),
       Field("ships", OptionType(shipConnection), arguments = Connection.Args.All,
-        resolve = ctx ⇒ Connection.connectionFromSeq(ctx.value.ships map ctx.ctx.getShip, ConnectionArgs(ctx)))))
+        resolve = ctx => Connection.connectionFromSeq(ctx.value.ships map ctx.ctx.getShip, ConnectionArgs(ctx)))))
 
   /**
     * This is the type that will be the root of our query, and the
@@ -207,9 +207,9 @@ object SchemaDefinition {
       InputField("shipName", StringType),
       InputField("factionId", IDType)),
     outputFields = fields(
-      Field("ship", OptionType(ShipType), resolve = ctx ⇒ ctx.ctx.getShip(ctx.value.shipId)),
-      Field("faction", OptionType(FactionType), resolve = ctx ⇒ ctx.ctx.getFaction(ctx.value.factionId))),
-    mutateAndGetPayload = (input, ctx) ⇒ {
+      Field("ship", OptionType(ShipType), resolve = ctx => ctx.ctx.getShip(ctx.value.shipId)),
+      Field("faction", OptionType(FactionType), resolve = ctx => ctx.ctx.getFaction(ctx.value.factionId))),
+    mutateAndGetPayload = (input, ctx) => {
       val mutationId = input.get(Mutation.ClientMutationIdFieldName).asInstanceOf[Option[Option[String]]].flatten
       val shipName = input("shipName").asInstanceOf[String]
       val factionId = input("factionId").asInstanceOf[String]

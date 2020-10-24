@@ -14,7 +14,7 @@ import scala.util.{Failure, Success}
 
 
 object GenerateSchema {
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     val futureOfSchemaJson = Executor.execute(SchemaDefinition.schema, introspectionQuery, userContext = new FactionRepo)
 
     val schemaJson = Await.ready(futureOfSchemaJson, 5.second).value.get

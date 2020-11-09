@@ -14,3 +14,10 @@ target
 
 # webpack output
 /public/*.*
+.metals/
+.vscode/
+project/project/
+project/metals.sbt
+project/plugins/project/
+metals.sbt
+.bloop/

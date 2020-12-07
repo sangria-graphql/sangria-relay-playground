@@ -18,21 +18,18 @@ import sangria.renderer.SchemaRenderer
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
-class Application @Inject()(cc: ControllerComponents, config: Configuration)(implicit ec: ExecutionContext) extends AbstractController(cc) {
-
+class Application @Inject() (system: ActorSystem, config: Configuration) extends InjectedController {
+  import system.dispatcher
+  
   val googleAnalyticsCode = config.getOptional[String]("gaCode")
   val defaultGraphQLUrl = config.getOptional[String]("defaultGraphQLUrl").getOrElse(s"http://localhost:${config.getOptional[Int]("http.port").getOrElse(9000)}/graphql")
 
   def index = Action {
-    Ok(views.html.index(googleAnalyticsCode,defaultGraphQLUrl))
+    Ok(views.html.playground(googleAnalyticsCode))
   }
 
   def playground = Action {
     Ok(views.html.playground(googleAnalyticsCode))
-  }
-
-  def starwars = Action {
-    Ok(views.html.starwars())
   }
 
   def graphql(query: String, variables: Option[String], operation: Option[String]) =

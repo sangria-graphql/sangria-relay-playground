@@ -1,0 +1,12 @@
+{
+  "name": "Sangria Play (Relay) Example",
+  "description": "An example GraphQL server written with Play, Sangria, and Sangria Relay.",
+  "repository": "https://github.com/sangria-graphql/sangria-relay-playground",
+  "logo": "https://raw.githubusercontent.com/sangria-graphql/sangria-logo/master/sangria-icon.png",
+  "keywords": [
+    "scala",
+    "sangria",
+    "relay",
+    "graphql"
+  ]
+}

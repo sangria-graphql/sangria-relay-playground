@@ -9,12 +9,9 @@ scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked")
 libraryDependencies ++= Seq(
   filters,
   guice,
-  "org.sangria-graphql" %% "sangria-relay" % "2.0.0",
+  "org.sangria-graphql" %% "sangria-relay" % "2.1.0",
   "org.sangria-graphql" %% "sangria-play-json" % "2.0.1"
 )
-
-resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
-resolvers += "Sonatype snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
 
 routesGenerator := InjectedRoutesGenerator
 

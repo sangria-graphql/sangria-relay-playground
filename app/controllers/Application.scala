@@ -15,27 +15,27 @@ import models.SchemaDefinition
 import models.StarWarsData._
 import sangria.renderer.SchemaRenderer
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
 class Application @Inject() (system: ActorSystem, config: Configuration) extends InjectedController {
   import system.dispatcher
   
-  val googleAnalyticsCode = config.getOptional[String]("gaCode")
-  val defaultGraphQLUrl = config.getOptional[String]("defaultGraphQLUrl").getOrElse(s"http://localhost:${config.getOptional[Int]("http.port").getOrElse(9000)}/graphql")
+  val googleAnalyticsCode: Option[String] = config.getOptional[String]("gaCode")
+  val defaultGraphQLUrl: String = config.getOptional[String]("defaultGraphQLUrl").getOrElse(s"http://localhost:${config.getOptional[Int]("http.port").getOrElse(9000)}/graphql")
 
-  def index = Action {
+  def index: Action[AnyContent] = Action {
     Ok(views.html.playground(googleAnalyticsCode))
   }
 
-  def playground = Action {
+  def playground: Action[AnyContent] = Action {
     Ok(views.html.playground(googleAnalyticsCode))
   }
 
-  def graphql(query: String, variables: Option[String], operation: Option[String]) =
+  def graphql(query: String, variables: Option[String], operation: Option[String]): Action[AnyContent] =
     Action.async(executeQuery(query, variables map parseVariables, operation))
 
-  def graphqlBody = Action.async(parse.json) { request =>
+  def graphqlBody: Action[JsValue] = Action.async(parse.json) { request =>
     val query = (request.body \ "query").as[String]
     val operation = (request.body \ "operationName").asOpt[String]
 
@@ -48,10 +48,10 @@ class Application @Inject() (system: ActorSystem, config: Configuration) extends
     executeQuery(query, variables, operation)
   }
 
-  private def parseVariables(variables: String) =
+  private def parseVariables(variables: String): JsObject =
     if (variables.trim == "") Json.obj() else Json.parse(variables).as[JsObject]
 
-  private def executeQuery(query: String, variables: Option[JsObject], operation: Option[String]) =
+  private def executeQuery(query: String, variables: Option[JsObject], operation: Option[String]): Future[Result] =
     QueryParser.parse(query) match {
 
       // query parsed successfully, time to execute it!
@@ -78,7 +78,7 @@ class Application @Inject() (system: ActorSystem, config: Configuration) extends
         throw error
     }
 
-  def renderSchema = Action {
+  def renderSchema: Action[AnyContent] = Action {
     Ok(SchemaRenderer.renderSchema(SchemaDefinition.schema))
   }
 }

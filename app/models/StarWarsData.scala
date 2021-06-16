@@ -1,8 +1,6 @@
 package models
 
 import java.util.concurrent.atomic.AtomicInteger
-import sangria.relay.Identifiable
-import sangria.relay.Node
 import sangria.relay.{Identifiable, Node}
 
 object StarWarsData {
@@ -14,38 +12,38 @@ object StarWarsData {
   object Faction {
 
     implicit object FactionIdentifiable extends Identifiable[Faction] {
-      def id(faction: Faction) = faction.id
+      def id(faction: Faction): String = faction.id
     }
 
   }
 
   object Ships {
-    val xwing = Ship("1", "X-Wing")
-    val ywing = Ship("2", "Y-Wing")
-    val awing = Ship("3", "A-Wing")
-    val falcon = Ship("4", "Millenium Falcon")
-    val homeOne = Ship("5", "Home One")
-    val tieFighter = Ship("6", "TIE Fighter")
-    val tieInterceptor = Ship("7", "TIE Interceptor")
-    val executor = Ship("8", "Executor")
+    val xwing: Ship = Ship("1", "X-Wing")
+    val ywing: Ship = Ship("2", "Y-Wing")
+    val awing: Ship = Ship("3", "A-Wing")
+    val falcon: Ship = Ship("4", "Millenium Falcon")
+    val homeOne: Ship = Ship("5", "Home One")
+    val tieFighter: Ship = Ship("6", "TIE Fighter")
+    val tieInterceptor: Ship = Ship("7", "TIE Interceptor")
+    val executor: Ship = Ship("8", "Executor")
 
-    val All = xwing :: ywing :: awing :: falcon :: homeOne :: tieFighter :: tieInterceptor :: executor :: Nil
+    val All: Seq[Ship] = xwing :: ywing :: awing :: falcon :: homeOne :: tieFighter :: tieInterceptor :: executor :: Nil
   }
 
   object Factions {
-    val rebels = Faction("1", "Alliance to Restore the Republic", List("1", "2", "3", "4", "5"))
-    val empire = Faction("2", "Galactic Empire", List("6", "7", "8"))
+    val rebels: Faction = Faction("1", "Alliance to Restore the Republic", List("1", "2", "3", "4", "5"))
+    val empire: Faction = Faction("2", "Galactic Empire", List("6", "7", "8"))
 
-    val All = rebels :: empire :: Nil
+    val All: Seq[Faction] = rebels :: empire :: Nil
   }
 
   class FactionRepo {
     val nextShipId = new AtomicInteger(9)
 
-    var ships = Ships.All
-    var factions = Factions.All
+    var ships: Seq[Ship] = Ships.All
+    var factions: Seq[Faction] = Factions.All
 
-    def createShip(shipName: String, factionId: String) = {
+    def createShip(shipName: String, factionId: String): Ship = {
       val newShip = Ship("" + nextShipId.getAndIncrement(), shipName)
 
       ships = ships :+ newShip
@@ -56,15 +54,15 @@ object StarWarsData {
       newShip
     }
 
-    def getShip(id: String) = ships find (_.id == id)
+    def getShip(id: String): Option[Ship] = ships find (_.id == id)
 
-    def getFaction(id: String) = factions find (_.id == id)
+    def getFaction(id: String): Option[Faction] = factions find (_.id == id)
 
-    def getFactions(names: Seq[String]) = {
+    def getFactions(names: Seq[String]): Seq[Option[Faction]] = {
       names.map(getFractionFromName)
     }
 
-    def getFractionFromName(name: String) = {
+    def getFractionFromName(name: String): Option[Faction] = {
       if (name == "empire")
         getEmpire
       else if (name == "rebels")
@@ -73,9 +71,9 @@ object StarWarsData {
         None
     }
 
-    def getRebels = factions find (_.id == "1")
+    def getRebels: Option[Faction] = factions find (_.id == "1")
 
-    def getEmpire = factions find (_.id == "2")
+    def getEmpire: Option[Faction] = factions find (_.id == "2")
   }
 
 }

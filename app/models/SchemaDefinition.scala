@@ -3,6 +3,8 @@ package models
 import sangria.schema._
 import sangria.relay._
 import models.StarWarsData._
+import sangria.marshalling.FromInput
+import sangria.util.tag.@@
 
 
 /**
@@ -96,7 +98,7 @@ object SchemaDefinition {
     }, Node.possibleNodeTypes[FactionRepo, Node](ShipType))
 
 
-  def idFields[T: Identifiable] = fields[Unit, T](
+  def idFields[T: Identifiable]: List[Field[Unit, T]] = fields[Unit, T](
     Node.globalIdField,
     Field("rawId", StringType, resolve = ctx => implicitly[Identifiable[T]].id(ctx.value))
   )
@@ -134,7 +136,8 @@ object SchemaDefinition {
     * node: Ship
     * }
     */
-  val ConnectionDefinition(_, shipConnection) = Connection.definition[FactionRepo, Connection, Option[Ship]]("Ship", OptionType(ShipType))
+  val ConnectionDefinition(_, shipConnection) =
+    Connection.definition[FactionRepo, Connection, Option[Ship]]("Ship", OptionType(ShipType))
 
   /**
     * We define our faction type, which implements the node interface.
@@ -170,9 +173,10 @@ object SchemaDefinition {
     */
 
 
-  val namesArgument = Argument("names", ListInputType(StringType))
+  val namesArgument: Argument[Seq[String @@ FromInput.CoercedScalaResult]] =
+    Argument("names", ListInputType(StringType))
 
-  val QueryType = ObjectType("Query", fields[FactionRepo, Unit](
+  val QueryType: ObjectType[FactionRepo, Unit] = ObjectType("Query", fields[FactionRepo, Unit](
     Field("factions", ListType(OptionType(FactionType)),
       arguments = namesArgument :: Nil,
       resolve = ctx => ctx.ctx.getFactions(ctx.arg(namesArgument))),
@@ -200,25 +204,26 @@ object SchemaDefinition {
     * faction: Faction
     * }
     */
-  val shipMutation = Mutation.fieldWithClientMutationId[FactionRepo, Unit, ShipMutationPayload, InputObjectType.DefaultInput](
-    fieldName = "introduceShip",
-    typeName = "IntroduceShip",
-    inputFields = List(
-      InputField("shipName", StringType),
-      InputField("factionId", IDType)),
-    outputFields = fields(
-      Field("ship", OptionType(ShipType), resolve = ctx => ctx.ctx.getShip(ctx.value.shipId)),
-      Field("faction", OptionType(FactionType), resolve = ctx => ctx.ctx.getFaction(ctx.value.factionId))),
-    mutateAndGetPayload = (input, ctx) => {
-      val mutationId = input.get(Mutation.ClientMutationIdFieldName).asInstanceOf[Option[Option[String]]].flatten
-      val shipName = input("shipName").asInstanceOf[String]
-      val factionId = input("factionId").asInstanceOf[String]
+  val shipMutation: Field[FactionRepo, Unit] =
+    Mutation.fieldWithClientMutationId[FactionRepo, Unit, ShipMutationPayload, InputObjectType.DefaultInput](
+      fieldName = "introduceShip",
+      typeName = "IntroduceShip",
+      inputFields = List(
+        InputField("shipName", StringType),
+        InputField("factionId", IDType)),
+      outputFields = fields(
+        Field("ship", OptionType(ShipType), resolve = ctx => ctx.ctx.getShip(ctx.value.shipId)),
+        Field("faction", OptionType(FactionType), resolve = ctx => ctx.ctx.getFaction(ctx.value.factionId))),
+      mutateAndGetPayload = (input, ctx) => {
+        val mutationId = input.get(Mutation.ClientMutationIdFieldName).asInstanceOf[Option[Option[String]]].flatten
+        val shipName = input("shipName").asInstanceOf[String]
+        val factionId = input("factionId").asInstanceOf[String]
 
-      val newShip = ctx.ctx.createShip(shipName, factionId)
+        val newShip = ctx.ctx.createShip(shipName, factionId)
 
-      ShipMutationPayload(mutationId, newShip.id, factionId)
-    }
-  )
+        ShipMutationPayload(mutationId, newShip.id, factionId)
+      }
+    )
 
   /**
     * This is the type that will be the root of our mutations, and the
@@ -229,7 +234,7 @@ object SchemaDefinition {
     * introduceShip(input IntroduceShipInput!): IntroduceShipPayload
     * }
     */
-  val MutationType = ObjectType("Mutation", fields[FactionRepo, Unit](shipMutation))
+  val MutationType: ObjectType[FactionRepo, Unit] = ObjectType("Mutation", fields[FactionRepo, Unit](shipMutation))
 
-  val schema = Schema(QueryType, Some(MutationType))
+  val schema: Schema[FactionRepo, Unit] = Schema(QueryType, Some(MutationType))
 }

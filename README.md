@@ -1,6 +1,6 @@
 ## Sangria-relay playground
 
-This is an example of [GraphQL](https://facebook.github.io/graphql) server supporting [Relay](https://facebook.github.io/relay/) written with [Play framework](https://www.playframework.com) and [Sangria](http://sangria-graphql.org).
+This is an example of [GraphQL](https://facebook.github.io/graphql) server supporting [Relay](https://facebook.github.io/relay/) written with [Play framework](https://www.playframework.com) and [Sangria](https://sangria-graphql.github.io/).
 
 It also serves as a playground - on the right hand side you see a textual representation of the GraphQL
 schema which is implemented on the server and that you can query here. On the left hand side
@@ -16,6 +16,6 @@ $ cd sangria-relay-playground
 $ sbt run
 ```
 
-Now you are ready to go to [http://localhost:9000](http://localhost:9000) for the playground or to [http://localhost:9000/
+Now you are ready to go to [http://localhost:9000](http://localhost:9000) for the playground
 
-The prerequisites are [SBT](http://www.scala-sbt.org/download.html), [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
+The prerequisites are [SBT](http://www.scala-sbt.org/download.html), [Java 8](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html).

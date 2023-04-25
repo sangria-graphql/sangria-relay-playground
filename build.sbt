@@ -9,7 +9,7 @@ scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked")
 libraryDependencies ++= Seq(
   filters,
   guice,
-  "org.sangria-graphql" %% "sangria-relay" % "2.1.1",
+  "org.sangria-graphql" %% "sangria-relay" % "3.0.1",
   "org.sangria-graphql" %% "sangria-play-json" % "2.0.2"
 )
 

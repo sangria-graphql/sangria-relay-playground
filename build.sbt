@@ -3,7 +3,7 @@ description := "An example of GraphQL server supporting relay written with Play 
 
 version := "1.0-SNAPSHOT"
 
-scalaVersion := "2.13.10"
+scalaVersion := "2.13.12"
 scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked")
 
 libraryDependencies ++= Seq(
